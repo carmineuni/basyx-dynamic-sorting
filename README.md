@@ -1,18 +1,18 @@
 # Eclipse BaSyx Dynamic Sorting Cell
 
-![](docs/slide1.png "Edge and distributed digital twins")
+![](docs/Slide1.png "Edge and distributed digital twins")
 
-![](docs/slide2.png "What the twins are made of")
+![](docs/Slide2.png "What the twins are made of")
 
-![](docs/slide3.png "Where the twins live")
+![](docs/Slide3.png "Where the twins live")
 
-![](docs/slide4.png "How they find each other")
+![](docs/Slide4.png "How they find each other")
 
-![](docs/slide5.png "How the work together")
+![](docs/Slide5.png "How the work together")
 
-![](docs/slide6.png "What BaSyx gives, what we added")
+![](docs/Slide6.png "What BaSyx gives, what we added")
 
-![](docs/slide7.png "BaSyx for edge and distributed twins")
+![](docs/Slide7.png "BaSyx for edge and distributed twins")
 
 ## Setup
 
