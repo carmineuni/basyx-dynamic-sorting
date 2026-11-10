@@ -1,0 +1,221 @@
+{
+  "modelType": "Submodel",
+  "id": "https://plant.example/submodels/cdt-ds/operational-data",
+  "idShort": "OperationalData",
+  "description": [
+    {
+      "language": "en-GB",
+      "text": "Operational data of the cell, written by the dynamic sorting application."
+    }
+  ],
+  "semanticId": {
+    "type": "ExternalReference",
+    "keys": [
+      {
+        "type": "GlobalReference",
+        "value": "https://plant.example/semantics/dynamic-sorting/OperationalData/1/0"
+      }
+    ]
+  },
+  "kind": "Instance",
+  "submodelElements": [
+    {
+      "modelType": "Property",
+      "idShort": "State",
+      "semanticId": {
+        "type": "ExternalReference",
+        "keys": [
+          {
+            "type": "GlobalReference",
+            "value": "https://plant.example/semantics/dynamic-sorting/SortingState/1/0"
+          }
+        ]
+      },
+      "valueType": "xs:string",
+      "value": "Stopped"
+    },
+    {
+      "modelType": "SubmodelElementCollection",
+      "idShort": "Packages",
+      "semanticId": {
+        "type": "ExternalReference",
+        "keys": [
+          {
+            "type": "GlobalReference",
+            "value": "https://plant.example/semantics/dynamic-sorting/PackageCounters/1/0"
+          }
+        ]
+      },
+      "value": [
+        {
+          "modelType": "Property",
+          "idShort": "SortedToLeftStockpile",
+          "semanticId": {
+            "type": "ExternalReference",
+            "keys": [
+              {
+                "type": "GlobalReference",
+                "value": "https://plant.example/semantics/dynamic-sorting/SortedToLeftStockpile/1/0"
+              }
+            ]
+          },
+          "valueType": "xs:int",
+          "value": "0"
+        },
+        {
+          "modelType": "Property",
+          "idShort": "SortedToRightStockpile",
+          "semanticId": {
+            "type": "ExternalReference",
+            "keys": [
+              {
+                "type": "GlobalReference",
+                "value": "https://plant.example/semantics/dynamic-sorting/SortedToRightStockpile/1/0"
+              }
+            ]
+          },
+          "valueType": "xs:int",
+          "value": "0"
+        },
+        {
+          "modelType": "Property",
+          "idShort": "Missed",
+          "description": [
+            {
+              "language": "en-GB",
+              "text": "Commanded packages that left the pick window before the gripper reached them."
+            }
+          ],
+          "semanticId": {
+            "type": "ExternalReference",
+            "keys": [
+              {
+                "type": "GlobalReference",
+                "value": "https://plant.example/semantics/dynamic-sorting/MissedPackages/1/0"
+              }
+            ]
+          },
+          "valueType": "xs:int",
+          "value": "0"
+        },
+        {
+          "modelType": "Property",
+          "idShort": "StaleCommands",
+          "description": [
+            {
+              "language": "en-GB",
+              "text": "Commands refused because the package they were decided for was no longer in the window."
+            }
+          ],
+          "semanticId": {
+            "type": "ExternalReference",
+            "keys": [
+              {
+                "type": "GlobalReference",
+                "value": "https://plant.example/semantics/dynamic-sorting/StaleCommands/1/0"
+              }
+            ]
+          },
+          "valueType": "xs:int",
+          "value": "0"
+        }
+      ]
+    },
+    {
+      "modelType": "SubmodelElementCollection",
+      "idShort": "LastPackage",
+      "semanticId": {
+        "type": "ExternalReference",
+        "keys": [
+          {
+            "type": "GlobalReference",
+            "value": "https://plant.example/semantics/dynamic-sorting/LastPackage/1/0"
+          }
+        ]
+      },
+      "value": [
+        {
+          "modelType": "Property",
+          "idShort": "ObjectIdentifier",
+          "semanticId": {
+            "type": "ExternalReference",
+            "keys": [
+              {
+                "type": "GlobalReference",
+                "value": "https://plant.example/semantics/dynamic-sorting/ObjectIdentifier/1/0"
+              }
+            ]
+          },
+          "valueType": "xs:string",
+          "value": ""
+        },
+        {
+          "modelType": "Property",
+          "idShort": "Outcome",
+          "semanticId": {
+            "type": "ExternalReference",
+            "keys": [
+              {
+                "type": "GlobalReference",
+                "value": "https://plant.example/semantics/dynamic-sorting/CommandOutcome/1/0"
+              }
+            ]
+          },
+          "valueType": "xs:string",
+          "value": ""
+        },
+        {
+          "modelType": "Property",
+          "idShort": "DecisionStalenessMilliseconds",
+          "semanticId": {
+            "type": "ExternalReference",
+            "keys": [
+              {
+                "type": "GlobalReference",
+                "value": "https://plant.example/semantics/dynamic-sorting/DecisionStaleness/1/0"
+              }
+            ]
+          },
+          "valueType": "xs:int",
+          "value": "0"
+        },
+        {
+          "modelType": "Property",
+          "idShort": "EndToEndMilliseconds",
+          "semanticId": {
+            "type": "ExternalReference",
+            "keys": [
+              {
+                "type": "GlobalReference",
+                "value": "https://plant.example/semantics/dynamic-sorting/EndToEndLatency/1/0"
+              }
+            ]
+          },
+          "valueType": "xs:int",
+          "value": "0"
+        }
+      ]
+    },
+    {
+      "modelType": "Property",
+      "idShort": "AasApiRequests",
+      "description": [
+        {
+          "language": "en-GB",
+          "text": "AAS API requests sent by the application since it started."
+        }
+      ],
+      "semanticId": {
+        "type": "ExternalReference",
+        "keys": [
+          {
+            "type": "GlobalReference",
+            "value": "https://plant.example/semantics/dynamic-sorting/AasApiRequests/1/0"
+          }
+        ]
+      },
+      "valueType": "xs:long",
+      "value": "0"
+    }
+  ]
+}

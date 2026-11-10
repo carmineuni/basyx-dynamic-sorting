@@ -1,0 +1,13 @@
+{
+  "name": "control-commands-endpoint",
+  "description": "Proxy of the robotic arm: edge half of iDT_RA",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "node main.js"
+  },
+  "dependencies": {
+    "basyx-typescript-sdk": "2.4.2",
+    "mqtt": "5.16.1"
+  }
+}

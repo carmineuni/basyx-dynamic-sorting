@@ -1,0 +1,62 @@
+// Collects the logs of every container of the cell and sends them to Loki.
+// The BaSyx servers and our programs both log key=value pairs (logfmt); the
+// dynamic sorting application also writes one JSON record per package.
+// Nothing is parsed here: the queries in Grafana parse the lines.
+
+discovery.docker "local" {
+  host             = "unix:///var/run/docker.sock"
+  refresh_interval = "5s"
+}
+
+discovery.relabel "cell" {
+  targets = discovery.docker.local.targets
+
+  // The containers of the cell (the project name in the root compose.yaml)
+  rule {
+    source_labels = ["__meta_docker_container_label_com_docker_compose_project"]
+    regex         = "dynamic-sorting-cell"
+    action        = "keep"
+  }
+
+  // But not the monitoring server itself
+  rule {
+    source_labels = ["__meta_docker_container_label_com_docker_compose_service"]
+    regex         = "monitoring-server|aas-web-ui|loki|alloy|grafana"
+    action        = "drop"
+  }
+
+  rule {
+    source_labels = ["__meta_docker_container_label_com_docker_compose_service"]
+    target_label  = "service"
+  }
+
+  rule {
+    source_labels = ["__meta_docker_container_name"]
+    regex         = "/(.*)"
+    replacement   = "$1"
+    target_label  = "container"
+  }
+}
+
+loki.source.docker "cell" {
+  host             = "unix:///var/run/docker.sock"
+  targets          = discovery.relabel.cell.output
+  forward_to       = [loki.process.cell.receiver]
+  refresh_interval = "5s"
+}
+
+loki.process "cell" {
+  // Our programs colour their logs: the ANSI codes are removed
+  stage.replace {
+    expression = "(\\x1b\\[[0-9;]*m)"
+    replace    = ""
+  }
+
+  forward_to = [loki.write.local.receiver]
+}
+
+loki.write "local" {
+  endpoint {
+    url = "http://localhost:3100/loki/api/v1/push"
+  }
+}

@@ -1,0 +1,51 @@
+##
+# BaSyx Go Submodel Repository of the robotic arm edge gateway (E_RA)
+# - The control commands endpoint loads at start-up
+# - Registers in the plant's Submodel Registry
+# - Invocations of its DropAt Operation are delegated to that endpoint
+#   - See SMREPO_DELEGATION_TRUSTED_HOSTS in compose.yaml
+#
+
+logging:
+  format: text
+  level: info
+
+server:
+  port: 8092
+  host: 0.0.0.0
+  contextPath: ""
+  strictVerification: strict
+
+postgres:
+  host: localhost
+  port: 5432
+  user: basyx
+  dbname: basyx
+  maxOpenConnections: 10
+  maxIdleConnections: 5
+  connMaxLifetimeMinutes: 5
+
+cors:
+  allowedOrigins: ["*"]
+  allowedMethods: [GET, POST, PUT, PATCH, DELETE, OPTIONS]
+  allowedHeaders: ["*"]
+  allowCredentials: true
+
+abac:
+  enabled: false
+
+general:
+  externalUrl: http://robotic-arm-edge-gateway:8092
+  aasRegistryIntegration: false
+  submodelRegistryIntegration: false
+
+eventing:
+  enabled: true
+  format: cloudevents
+  sinks: [mqtt]
+  outboxEnabled: true
+  topicPrefix: basyx
+  mqtt:
+    broker: mqtt://event-broker:1883
+    clientId: robotic-arm-edge-gateway-submodel-repository
+    qos: 1

@@ -1,0 +1,55 @@
+##
+# BaSyx Go Submodel Repository of the conveyor belt edge gateway (E_CB)
+# - The sensed properties forwarder loads at start-up
+# - Keeps in step with the belt PLC
+# - Registers in the plant's Submodel Registry
+#
+
+logging:
+  format: text
+  level: info
+
+server:
+  port: 8091
+  host: 0.0.0.0
+  contextPath: ""
+  strictVerification: strict
+
+postgres:
+  # The local database
+  host: localhost
+  port: 5432
+  user: basyx
+  dbname: basyx
+  maxOpenConnections: 10
+  maxIdleConnections: 5
+  connMaxLifetimeMinutes: 5
+
+cors:
+  allowedOrigins: ["*"]
+  allowedMethods: [GET, POST, PUT, PATCH, DELETE, OPTIONS]
+  allowedHeaders: ["*"]
+  allowCredentials: true
+
+abac:
+  enabled: false
+
+general:
+  externalUrl: http://conveyor-belt-edge-gateway:8091
+  # The forwarder registers the submodel in the plant's registry
+  # over HTTP, not here
+  aasRegistryIntegration: false
+  submodelRegistryIntegration: false
+
+# Every change of SensedProperties becomes a CloudEvent on the cell's
+# event broker
+eventing:
+  enabled: true
+  format: cloudevents
+  sinks: [mqtt]
+  outboxEnabled: true
+  topicPrefix: basyx
+  mqtt:
+    broker: mqtt://event-broker:1883
+    clientId: conveyor-belt-edge-gateway-submodel-repository
+    qos: 1

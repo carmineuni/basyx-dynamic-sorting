@@ -1,0 +1,12 @@
+{
+  "name": "conveyor-belt",
+  "description": "Simulated PLC of the conveyor belt (CB)",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "node main.js"
+  },
+  "dependencies": {
+    "mqtt": "5.16.1"
+  }
+}

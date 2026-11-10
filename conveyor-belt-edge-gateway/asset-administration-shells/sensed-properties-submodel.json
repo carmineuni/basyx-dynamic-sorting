@@ -1,0 +1,111 @@
+{
+  "modelType": "Submodel",
+  "id": "https://plant.example/submodels/idt-cb/sensed-properties",
+  "idShort": "SensedProperties",
+  "description": [
+    {
+      "language": "en-GB",
+      "text": "Live data, hosted by the conveyor belt edge gateway, which keeps it in step with the PLC."
+    }
+  ],
+  "semanticId": {
+    "type": "ExternalReference",
+    "keys": [
+      {
+        "type": "GlobalReference",
+        "value": "https://plant.example/semantics/dynamic-sorting/SensedProperties/1/0"
+      }
+    ]
+  },
+  "kind": "Instance",
+  "submodelElements": [
+    {
+      "modelType": "SubmodelElementCollection",
+      "idShort": "CurrentObject",
+      "semanticId": {
+        "type": "ExternalReference",
+        "keys": [
+          {
+            "type": "GlobalReference",
+            "value": "https://plant.example/semantics/dynamic-sorting/CurrentObject/1/0"
+          }
+        ]
+      },
+      "value": [
+        {
+          "modelType": "Property",
+          "idShort": "ObjectIdentifier",
+          "semanticId": {
+            "type": "ExternalReference",
+            "keys": [
+              {
+                "type": "GlobalReference",
+                "value": "https://plant.example/semantics/dynamic-sorting/ObjectIdentifier/1/0"
+              }
+            ]
+          },
+          "valueType": "xs:string",
+          "value": ""
+        },
+        {
+          "modelType": "Property",
+          "idShort": "ObjectColour",
+          "semanticId": {
+            "type": "ExternalReference",
+            "keys": [
+              {
+                "type": "GlobalReference",
+                "value": "https://plant.example/semantics/dynamic-sorting/ObjectColour/1/0"
+              }
+            ]
+          },
+          "valueType": "xs:string",
+          "value": "none"
+        },
+        {
+          "modelType": "Property",
+          "idShort": "DetectedAt",
+          "semanticId": {
+            "type": "ExternalReference",
+            "keys": [
+              {
+                "type": "GlobalReference",
+                "value": "https://plant.example/semantics/dynamic-sorting/DetectedAt/1/0"
+              }
+            ]
+          },
+          "valueType": "xs:dateTime"
+        },
+        {
+          "modelType": "Property",
+          "idShort": "RecordedAt",
+          "semanticId": {
+            "type": "ExternalReference",
+            "keys": [
+              {
+                "type": "GlobalReference",
+                "value": "https://plant.example/semantics/dynamic-sorting/RecordedAt/1/0"
+              }
+            ]
+          },
+          "valueType": "xs:dateTime"
+        }
+      ]
+    },
+    {
+      "modelType": "Property",
+      "idShort": "PackagesDetected",
+      "semanticId": {
+        "type": "ExternalReference",
+        "keys": [
+          {
+            "type": "GlobalReference",
+            "value": "https://plant.example/semantics/dynamic-sorting/PackagesDetected/1/0"
+          }
+        ]
+      },
+      "valueType": "xs:int",
+      "value": "0"
+    }
+  ]
+}

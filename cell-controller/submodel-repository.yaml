@@ -1,0 +1,55 @@
+##
+# BaSyx Go Submodel Repository of the cell controller (CC)
+# - The dynamic sorting application loads SortingRules and OperationalData at
+#   start-up
+# - Registers in the plant's Submodel Registry
+#
+
+logging:
+  format: text
+  level: info
+
+server:
+  port: 8093
+  host: 0.0.0.0
+  contextPath: ""
+  strictVerification: strict
+
+postgres:
+  # The local database
+  host: localhost
+  port: 5432
+  user: basyx
+  dbname: basyx
+  maxOpenConnections: 10
+  maxIdleConnections: 5
+  connMaxLifetimeMinutes: 5
+
+cors:
+  allowedOrigins: ["*"]
+  allowedMethods: [GET, POST, PUT, PATCH, DELETE, OPTIONS]
+  allowedHeaders: ["*"]
+  allowCredentials: true
+
+abac:
+  enabled: false
+
+general:
+  externalUrl: http://cell-controller:8093
+  # The dynamic sorting application registers the submodels in the plant's
+  # registry over HTTP, not here
+  aasRegistryIntegration: false
+  submodelRegistryIntegration: false
+
+# Every change of SortingRules becomes a CloudEvent on the cell's event
+# broker, so that the dynamic sorting application loads the new rules
+eventing:
+  enabled: true
+  format: cloudevents
+  sinks: [mqtt]
+  outboxEnabled: true
+  topicPrefix: basyx
+  mqtt:
+    broker: mqtt://event-broker:1883
+    clientId: cell-controller-submodel-repository
+    qos: 1

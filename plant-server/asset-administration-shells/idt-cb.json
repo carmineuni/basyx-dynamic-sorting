@@ -1,0 +1,106 @@
+{
+  "assetAdministrationShells": [
+    {
+      "modelType": "AssetAdministrationShell",
+      "id": "https://plant.example/aas/idt-cb",
+      "idShort": "iDT_CB",
+      "assetInformation": {
+        "assetKind": "Instance",
+        "globalAssetId": "https://plant.example/assets/conveyor-belt/CB-0001"
+      },
+      "submodels": [
+        {
+          "type": "ModelReference",
+          "keys": [
+            {
+              "type": "Submodel",
+              "value": "https://plant.example/submodels/idt-cb/nameplate"
+            }
+          ]
+        },
+        {
+          "type": "ModelReference",
+          "keys": [
+            {
+              "type": "Submodel",
+              "value": "https://plant.example/submodels/idt-cb/sensed-properties"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "submodels": [
+    {
+      "modelType": "Submodel",
+      "id": "https://plant.example/submodels/idt-cb/nameplate",
+      "idShort": "Nameplate",
+      "semanticId": {
+        "type": "ExternalReference",
+        "keys": [
+          {
+            "type": "GlobalReference",
+            "value": "https://admin-shell.io/idta/nameplate/3/0/Nameplate"
+          }
+        ]
+      },
+      "kind": "Instance",
+      "submodelElements": [
+        {
+          "modelType": "MultiLanguageProperty",
+          "idShort": "ManufacturerName",
+          "semanticId": {
+            "type": "ExternalReference",
+            "keys": [
+              {
+                "type": "GlobalReference",
+                "value": "0112/2///61987#ABA565#009"
+              }
+            ]
+          },
+          "value": [
+            {
+              "language": "en-GB",
+              "text": "Example Conveyors Ltd"
+            }
+          ]
+        },
+        {
+          "modelType": "MultiLanguageProperty",
+          "idShort": "ManufacturerProductDesignation",
+          "semanticId": {
+            "type": "ExternalReference",
+            "keys": [
+              {
+                "type": "GlobalReference",
+                "value": "0112/2///61987#ABA567#009"
+              }
+            ]
+          },
+          "value": [
+            {
+              "language": "en-GB",
+              "text": "Belt conveyor BC-600 with colour sensor"
+            }
+          ]
+        },
+        {
+          "modelType": "Property",
+          "idShort": "SerialNumber",
+          "semanticId": {
+            "type": "ExternalReference",
+            "keys": [
+              {
+                "type": "GlobalReference",
+                "value": "0112/2///61987#ABA951#009"
+              }
+            ]
+          },
+          "valueType": "xs:string",
+          "value": "CB-0001"
+        }
+      ]
+    }
+  ],
+  "conceptDescriptions": []
+}

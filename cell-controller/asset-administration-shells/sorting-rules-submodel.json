@@ -1,0 +1,137 @@
+{
+  "modelType": "Submodel",
+  "id": "https://plant.example/submodels/cdt-ds/sorting-rules",
+  "idShort": "SortingRules",
+  "semanticId": {
+    "type": "ExternalReference",
+    "keys": [
+      {
+        "type": "GlobalReference",
+        "value": "https://plant.example/semantics/dynamic-sorting/SortingRules/1/0"
+      }
+    ]
+  },
+  "kind": "Instance",
+  "submodelElements": [
+    {
+      "modelType": "SubmodelElementCollection",
+      "idShort": "MetallicObjects",
+      "semanticId": {
+        "type": "ExternalReference",
+        "keys": [
+          {
+            "type": "GlobalReference",
+            "value": "https://plant.example/semantics/dynamic-sorting/SortingRule/1/0"
+          }
+        ]
+      },
+      "value": [
+        {
+          "modelType": "Property",
+          "idShort": "ObjectColour",
+          "semanticId": {
+            "type": "ExternalReference",
+            "keys": [
+              {
+                "type": "GlobalReference",
+                "value": "https://plant.example/semantics/dynamic-sorting/ObjectColour/1/0"
+              }
+            ]
+          },
+          "valueType": "xs:string",
+          "value": "red"
+        },
+        {
+          "modelType": "Property",
+          "idShort": "Material",
+          "semanticId": {
+            "type": "ExternalReference",
+            "keys": [
+              {
+                "type": "GlobalReference",
+                "value": "https://plant.example/semantics/dynamic-sorting/Material/1/0"
+              }
+            ]
+          },
+          "valueType": "xs:string",
+          "value": "metallic"
+        },
+        {
+          "modelType": "Property",
+          "idShort": "TargetStockpile",
+          "semanticId": {
+            "type": "ExternalReference",
+            "keys": [
+              {
+                "type": "GlobalReference",
+                "value": "https://plant.example/semantics/dynamic-sorting/Stockpile/1/0"
+              }
+            ]
+          },
+          "valueType": "xs:string",
+          "value": "left"
+        }
+      ]
+    },
+    {
+      "modelType": "SubmodelElementCollection",
+      "idShort": "NonMetallicObjects",
+      "semanticId": {
+        "type": "ExternalReference",
+        "keys": [
+          {
+            "type": "GlobalReference",
+            "value": "https://plant.example/semantics/dynamic-sorting/SortingRule/1/0"
+          }
+        ]
+      },
+      "value": [
+        {
+          "modelType": "Property",
+          "idShort": "ObjectColour",
+          "semanticId": {
+            "type": "ExternalReference",
+            "keys": [
+              {
+                "type": "GlobalReference",
+                "value": "https://plant.example/semantics/dynamic-sorting/ObjectColour/1/0"
+              }
+            ]
+          },
+          "valueType": "xs:string",
+          "value": "green"
+        },
+        {
+          "modelType": "Property",
+          "idShort": "Material",
+          "semanticId": {
+            "type": "ExternalReference",
+            "keys": [
+              {
+                "type": "GlobalReference",
+                "value": "https://plant.example/semantics/dynamic-sorting/Material/1/0"
+              }
+            ]
+          },
+          "valueType": "xs:string",
+          "value": "non-metallic"
+        },
+        {
+          "modelType": "Property",
+          "idShort": "TargetStockpile",
+          "semanticId": {
+            "type": "ExternalReference",
+            "keys": [
+              {
+                "type": "GlobalReference",
+                "value": "https://plant.example/semantics/dynamic-sorting/Stockpile/1/0"
+              }
+            ]
+          },
+          "valueType": "xs:string",
+          "value": "right"
+        }
+      ]
+    }
+  ]
+}

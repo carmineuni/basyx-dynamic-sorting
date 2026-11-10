@@ -1,0 +1,239 @@
+{
+  "assetAdministrationShells": [],
+  "submodels": [],
+  "conceptDescriptions": [
+    {
+      "modelType": "ConceptDescription",
+      "id": "https://plant.example/semantics/dynamic-sorting/SensedProperties/1/0",
+      "idShort": "SensedProperties",
+      "embeddedDataSpecifications": [
+        {
+          "dataSpecification": {
+            "type": "ExternalReference",
+            "keys": [
+              {
+                "type": "GlobalReference",
+                "value": "https://admin-shell.io/DataSpecificationTemplates/DataSpecificationIEC61360/3/0"
+              }
+            ]
+          },
+          "dataSpecificationContent": {
+            "modelType": "DataSpecificationIec61360",
+            "preferredName": [
+              {
+                "language": "en-GB",
+                "text": "sensed properties"
+              }
+            ],
+            "definition": [
+              {
+                "language": "en-GB",
+                "text": "Data a physical entity senses about itself or its surroundings."
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "modelType": "ConceptDescription",
+      "id": "https://plant.example/semantics/dynamic-sorting/ObjectColour/1/0",
+      "idShort": "ObjectColour",
+      "embeddedDataSpecifications": [
+        {
+          "dataSpecification": {
+            "type": "ExternalReference",
+            "keys": [
+              {
+                "type": "GlobalReference",
+                "value": "https://admin-shell.io/DataSpecificationTemplates/DataSpecificationIEC61360/3/0"
+              }
+            ]
+          },
+          "dataSpecificationContent": {
+            "modelType": "DataSpecificationIec61360",
+            "preferredName": [
+              {
+                "language": "en-GB",
+                "text": "object colour"
+              }
+            ],
+            "definition": [
+              {
+                "language": "en-GB",
+                "text": "Colour marking of a package: red for metallic, green for non-metallic, none if no package is present."
+              }
+            ],
+            "dataType": "STRING"
+          }
+        }
+      ]
+    },
+    {
+      "modelType": "ConceptDescription",
+      "id": "https://plant.example/semantics/dynamic-sorting/ControlCommands/1/0",
+      "idShort": "ControlCommands",
+      "embeddedDataSpecifications": [
+        {
+          "dataSpecification": {
+            "type": "ExternalReference",
+            "keys": [
+              {
+                "type": "GlobalReference",
+                "value": "https://admin-shell.io/DataSpecificationTemplates/DataSpecificationIEC61360/3/0"
+              }
+            ]
+          },
+          "dataSpecificationContent": {
+            "modelType": "DataSpecificationIec61360",
+            "preferredName": [
+              {
+                "language": "en-GB",
+                "text": "control commands"
+              }
+            ],
+            "definition": [
+              {
+                "language": "en-GB",
+                "text": "Commands a physical entity accepts."
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "modelType": "ConceptDescription",
+      "id": "https://plant.example/semantics/dynamic-sorting/Stockpile/1/0",
+      "idShort": "Stockpile",
+      "embeddedDataSpecifications": [
+        {
+          "dataSpecification": {
+            "type": "ExternalReference",
+            "keys": [
+              {
+                "type": "GlobalReference",
+                "value": "https://admin-shell.io/DataSpecificationTemplates/DataSpecificationIEC61360/3/0"
+              }
+            ]
+          },
+          "dataSpecificationContent": {
+            "modelType": "DataSpecificationIec61360",
+            "preferredName": [
+              {
+                "language": "en-GB",
+                "text": "stockpile"
+              }
+            ],
+            "definition": [
+              {
+                "language": "en-GB",
+                "text": "Destination area for sorted packages: left or right."
+              }
+            ],
+            "dataType": "STRING"
+          }
+        }
+      ]
+    },
+    {
+      "modelType": "ConceptDescription",
+      "id": "https://plant.example/semantics/dynamic-sorting/SortingRules/1/0",
+      "idShort": "SortingRules",
+      "embeddedDataSpecifications": [
+        {
+          "dataSpecification": {
+            "type": "ExternalReference",
+            "keys": [
+              {
+                "type": "GlobalReference",
+                "value": "https://admin-shell.io/DataSpecificationTemplates/DataSpecificationIEC61360/3/0"
+              }
+            ]
+          },
+          "dataSpecificationContent": {
+            "modelType": "DataSpecificationIec61360",
+            "preferredName": [
+              {
+                "language": "en-GB",
+                "text": "sorting rules"
+              }
+            ],
+            "definition": [
+              {
+                "language": "en-GB",
+                "text": "Rules assigning each kind of package to a stockpile."
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "modelType": "ConceptDescription",
+      "id": "https://plant.example/semantics/dynamic-sorting/SortingRule/1/0",
+      "idShort": "SortingRule",
+      "embeddedDataSpecifications": [
+        {
+          "dataSpecification": {
+            "type": "ExternalReference",
+            "keys": [
+              {
+                "type": "GlobalReference",
+                "value": "https://admin-shell.io/DataSpecificationTemplates/DataSpecificationIEC61360/3/0"
+              }
+            ]
+          },
+          "dataSpecificationContent": {
+            "modelType": "DataSpecificationIec61360",
+            "preferredName": [
+              {
+                "language": "en-GB",
+                "text": "sorting rule"
+              }
+            ],
+            "definition": [
+              {
+                "language": "en-GB",
+                "text": "Assignment of packages with one colour marking to a stockpile."
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "modelType": "ConceptDescription",
+      "id": "https://plant.example/semantics/dynamic-sorting/OperationalData/1/0",
+      "idShort": "OperationalData",
+      "embeddedDataSpecifications": [
+        {
+          "dataSpecification": {
+            "type": "ExternalReference",
+            "keys": [
+              {
+                "type": "GlobalReference",
+                "value": "https://admin-shell.io/DataSpecificationTemplates/DataSpecificationIEC61360/3/0"
+              }
+            ]
+          },
+          "dataSpecificationContent": {
+            "modelType": "DataSpecificationIec61360",
+            "preferredName": [
+              {
+                "language": "en-GB",
+                "text": "operational data"
+              }
+            ],
+            "definition": [
+              {
+                "language": "en-GB",
+                "text": "Run-time data of the dynamic sorting cell."
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

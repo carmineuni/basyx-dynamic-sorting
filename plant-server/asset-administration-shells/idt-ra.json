@@ -1,0 +1,87 @@
+{
+  "assetAdministrationShells": [
+    {
+      "modelType": "AssetAdministrationShell",
+      "id": "https://plant.example/aas/idt-ra",
+      "idShort": "iDT_RA",
+      "assetInformation": {
+        "assetKind": "Instance",
+        "globalAssetId": "https://plant.example/assets/robotic-arm/RA-0001"
+      },
+      "submodels": [
+        {
+          "type": "ModelReference",
+          "keys": [
+            {
+              "type": "Submodel",
+              "value": "https://plant.example/submodels/idt-ra/nameplate"
+            }
+          ]
+        },
+        {
+          "type": "ModelReference",
+          "keys": [
+            {
+              "type": "Submodel",
+              "value": "https://plant.example/submodels/idt-ra/control-commands"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "submodels": [
+    {
+      "modelType": "Submodel",
+      "id": "https://plant.example/submodels/idt-ra/nameplate",
+      "idShort": "Nameplate",
+      "semanticId": {
+        "type": "ExternalReference",
+        "keys": [
+          {
+            "type": "GlobalReference",
+            "value": "https://admin-shell.io/idta/nameplate/3/0/Nameplate"
+          }
+        ]
+      },
+      "kind": "Instance",
+      "submodelElements": [
+        {
+          "modelType": "MultiLanguageProperty",
+          "idShort": "ManufacturerName",
+          "semanticId": {
+            "type": "ExternalReference",
+            "keys": [
+              {
+                "type": "GlobalReference",
+                "value": "0112/2///61987#ABA565#009"
+              }
+            ]
+          },
+          "value": [
+            {
+              "language": "en-GB",
+              "text": "Example Robotics plc"
+            }
+          ]
+        },
+        {
+          "modelType": "Property",
+          "idShort": "SerialNumber",
+          "semanticId": {
+            "type": "ExternalReference",
+            "keys": [
+              {
+                "type": "GlobalReference",
+                "value": "0112/2///61987#ABA951#009"
+              }
+            ]
+          },
+          "valueType": "xs:string",
+          "value": "RA-0001"
+        }
+      ]
+    }
+  ],
+  "conceptDescriptions": []
+}

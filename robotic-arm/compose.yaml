@@ -1,0 +1,30 @@
+# The settings below can be overridden from the shell, for example:
+# TRAVEL_TIME_MIN=1s TRAVEL_TIME_MAX=2s docker compose up -d
+
+services:
+  robotic-arm:
+    build: .
+    hostname: robotic-arm
+    init: true
+    cap_drop:
+      - ALL
+    logging:
+      driver: local
+      options:
+        max-size: "10m"
+        max-file: "3"
+    environment:
+      NODE_ENV: production
+      # MQTT ICG URL
+      ICG_URL: mqtt://industrial-communication-gateway:1883
+      # From the command to the gripper closing on the package
+      REACH_TIME: ${REACH_TIME:-700ms}
+      # From the pick to the release over the stockpile
+      PLACE_TIME: ${PLACE_TIME:-700ms}
+    networks:
+      - shop-floor-network
+    restart: unless-stopped
+
+networks:
+  shop-floor-network:
+    internal: true

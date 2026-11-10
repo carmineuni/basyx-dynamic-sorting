@@ -1,0 +1,289 @@
+{
+  "assetAdministrationShells": [
+    {
+      "modelType": "AssetAdministrationShell",
+      "id": "https://plant.example/aas/cdt-ds",
+      "idShort": "cDT_DS",
+      "description": [
+        {
+          "language": "en-GB",
+          "text": "Purpose-oriented composite digital twin of the dynamic sorting cell (cDT_DS), made of iDT_CB and iDT_RA: it sorts metallic and non-metallic packages according to SortingRules."
+        }
+      ],
+      "assetInformation": {
+        "assetKind": "Instance",
+        "globalAssetId": "https://plant.example/assets/dynamic-sorting-cell/DSC-0001",
+        "assetType": "https://automation.example/types/dynamic-sorting-cell"
+      },
+      "submodels": [
+        {
+          "type": "ModelReference",
+          "keys": [
+            {
+              "type": "Submodel",
+              "value": "https://plant.example/submodels/cdt-ds/nameplate"
+            }
+          ]
+        },
+        {
+          "type": "ModelReference",
+          "keys": [
+            {
+              "type": "Submodel",
+              "value": "https://plant.example/submodels/cdt-ds/hierarchical-structures"
+            }
+          ]
+        },
+        {
+          "type": "ModelReference",
+          "keys": [
+            {
+              "type": "Submodel",
+              "value": "https://plant.example/submodels/cdt-ds/sorting-rules"
+            }
+          ]
+        },
+        {
+          "type": "ModelReference",
+          "keys": [
+            {
+              "type": "Submodel",
+              "value": "https://plant.example/submodels/cdt-ds/operational-data"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "submodels": [
+    {
+      "modelType": "Submodel",
+      "id": "https://plant.example/submodels/cdt-ds/nameplate",
+      "idShort": "Nameplate",
+      "semanticId": {
+        "type": "ExternalReference",
+        "keys": [
+          {
+            "type": "GlobalReference",
+            "value": "https://admin-shell.io/idta/nameplate/3/0/Nameplate"
+          }
+        ]
+      },
+      "kind": "Instance",
+      "submodelElements": [
+        {
+          "modelType": "MultiLanguageProperty",
+          "idShort": "ManufacturerName",
+          "semanticId": {
+            "type": "ExternalReference",
+            "keys": [
+              {
+                "type": "GlobalReference",
+                "value": "0112/2///61987#ABA565#009"
+              }
+            ]
+          },
+          "value": [
+            {
+              "language": "en-GB",
+              "text": "Example Automation Ltd"
+            }
+          ]
+        },
+        {
+          "modelType": "Property",
+          "idShort": "SerialNumber",
+          "semanticId": {
+            "type": "ExternalReference",
+            "keys": [
+              {
+                "type": "GlobalReference",
+                "value": "0112/2///61987#ABA951#009"
+              }
+            ]
+          },
+          "valueType": "xs:string",
+          "value": "DSC-0001"
+        }
+      ]
+    },
+    {
+      "modelType": "Submodel",
+      "id": "https://plant.example/submodels/cdt-ds/hierarchical-structures",
+      "idShort": "HierarchicalStructures",
+      "description": [
+        {
+          "language": "en-GB",
+          "text": "Composition of the cell (IDTA 02011-1-1): the parts whose iDTs cDT_DS composes."
+        }
+      ],
+      "semanticId": {
+        "type": "ExternalReference",
+        "keys": [
+          {
+            "type": "GlobalReference",
+            "value": "https://admin-shell.io/idta/HierarchicalStructures/1/1/Submodel"
+          }
+        ]
+      },
+      "kind": "Instance",
+      "submodelElements": [
+        {
+          "modelType": "Property",
+          "idShort": "ArcheType",
+          "semanticId": {
+            "type": "ExternalReference",
+            "keys": [
+              {
+                "type": "GlobalReference",
+                "value": "https://admin-shell.io/idta/HierarchicalStructures/ArcheType/1/0"
+              }
+            ]
+          },
+          "valueType": "xs:string",
+          "value": "OneDown"
+        },
+        {
+          "modelType": "Entity",
+          "idShort": "EntryNode",
+          "description": [
+            {
+              "language": "en-GB",
+              "text": "The dynamic sorting cell itself."
+            }
+          ],
+          "semanticId": {
+            "type": "ExternalReference",
+            "keys": [
+              {
+                "type": "GlobalReference",
+                "value": "https://admin-shell.io/idta/HierarchicalStructures/EntryNode/1/0"
+              }
+            ]
+          },
+          "entityType": "SelfManagedEntity",
+          "globalAssetId": "https://plant.example/assets/dynamic-sorting-cell/DSC-0001",
+          "statements": [
+            {
+              "modelType": "Entity",
+              "idShort": "ConveyorBelt",
+              "semanticId": {
+                "type": "ExternalReference",
+                "keys": [
+                  {
+                    "type": "GlobalReference",
+                    "value": "https://admin-shell.io/idta/HierarchicalStructures/Node/1/0"
+                  }
+                ]
+              },
+              "entityType": "SelfManagedEntity",
+              "globalAssetId": "https://plant.example/assets/conveyor-belt/CB-0001"
+            },
+            {
+              "modelType": "Entity",
+              "idShort": "RoboticArm",
+              "semanticId": {
+                "type": "ExternalReference",
+                "keys": [
+                  {
+                    "type": "GlobalReference",
+                    "value": "https://admin-shell.io/idta/HierarchicalStructures/Node/1/0"
+                  }
+                ]
+              },
+              "entityType": "SelfManagedEntity",
+              "globalAssetId": "https://plant.example/assets/robotic-arm/RA-0001"
+            },
+            {
+              "modelType": "RelationshipElement",
+              "idShort": "HasPartConveyorBelt",
+              "semanticId": {
+                "type": "ExternalReference",
+                "keys": [
+                  {
+                    "type": "GlobalReference",
+                    "value": "https://admin-shell.io/idta/HierarchicalStructures/HasPart/1/0"
+                  }
+                ]
+              },
+              "first": {
+                "type": "ModelReference",
+                "keys": [
+                  {
+                    "type": "Submodel",
+                    "value": "https://plant.example/submodels/cdt-ds/hierarchical-structures"
+                  },
+                  {
+                    "type": "Entity",
+                    "value": "EntryNode"
+                  }
+                ]
+              },
+              "second": {
+                "type": "ModelReference",
+                "keys": [
+                  {
+                    "type": "Submodel",
+                    "value": "https://plant.example/submodels/cdt-ds/hierarchical-structures"
+                  },
+                  {
+                    "type": "Entity",
+                    "value": "EntryNode"
+                  },
+                  {
+                    "type": "Entity",
+                    "value": "ConveyorBelt"
+                  }
+                ]
+              }
+            },
+            {
+              "modelType": "RelationshipElement",
+              "idShort": "HasPartRoboticArm",
+              "semanticId": {
+                "type": "ExternalReference",
+                "keys": [
+                  {
+                    "type": "GlobalReference",
+                    "value": "https://admin-shell.io/idta/HierarchicalStructures/HasPart/1/0"
+                  }
+                ]
+              },
+              "first": {
+                "type": "ModelReference",
+                "keys": [
+                  {
+                    "type": "Submodel",
+                    "value": "https://plant.example/submodels/cdt-ds/hierarchical-structures"
+                  },
+                  {
+                    "type": "Entity",
+                    "value": "EntryNode"
+                  }
+                ]
+              },
+              "second": {
+                "type": "ModelReference",
+                "keys": [
+                  {
+                    "type": "Submodel",
+                    "value": "https://plant.example/submodels/cdt-ds/hierarchical-structures"
+                  },
+                  {
+                    "type": "Entity",
+                    "value": "EntryNode"
+                  },
+                  {
+                    "type": "Entity",
+                    "value": "RoboticArm"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "conceptDescriptions": []
+}

@@ -1,0 +1,149 @@
+{
+  "modelType": "Submodel",
+  "id": "https://plant.example/submodels/idt-ra/control-commands",
+  "idShort": "ControlCommands",
+  "description": [
+    {
+      "language": "en-GB",
+      "text": "Control commands of the robotic arm, hosted by the robotic arm edge gateway."
+    }
+  ],
+  "semanticId": {
+    "type": "ExternalReference",
+    "keys": [
+      {
+        "type": "GlobalReference",
+        "value": "https://plant.example/semantics/dynamic-sorting/ControlCommands/1/0"
+      }
+    ]
+  },
+  "kind": "Instance",
+  "submodelElements": [
+    {
+      "modelType": "Operation",
+      "idShort": "DropAt",
+      "semanticId": {
+        "type": "ExternalReference",
+        "keys": [
+          {
+            "type": "GlobalReference",
+            "value": "https://plant.example/semantics/dynamic-sorting/DropAt/1/0"
+          }
+        ]
+      },
+      "qualifiers": [
+        {
+          "type": "invocationDelegation",
+          "valueType": "xs:string",
+          "value": "http://localhost:8080/control-commands/drop-at"
+        }
+      ],
+      "inputVariables": [
+        {
+          "value": {
+            "modelType": "Property",
+            "idShort": "Stockpile",
+            "semanticId": {
+              "type": "ExternalReference",
+              "keys": [
+                {
+                  "type": "GlobalReference",
+                  "value": "https://plant.example/semantics/dynamic-sorting/Stockpile/1/0"
+                }
+              ]
+            },
+            "valueType": "xs:string"
+          }
+        },
+        {
+          "value": {
+            "modelType": "Property",
+            "idShort": "ObjectIdentifier",
+            "semanticId": {
+              "type": "ExternalReference",
+              "keys": [
+                {
+                  "type": "GlobalReference",
+                  "value": "https://plant.example/semantics/dynamic-sorting/ObjectIdentifier/1/0"
+                }
+              ]
+            },
+            "valueType": "xs:string"
+          }
+        }
+      ],
+      "outputVariables": [
+        {
+          "value": {
+            "modelType": "Property",
+            "idShort": "ObjectDropped",
+            "semanticId": {
+              "type": "ExternalReference",
+              "keys": [
+                {
+                  "type": "GlobalReference",
+                  "value": "https://plant.example/semantics/dynamic-sorting/ObjectDropped/1/0"
+                }
+              ]
+            },
+            "valueType": "xs:boolean"
+          }
+        },
+        {
+          "value": {
+            "modelType": "Property",
+            "idShort": "Outcome",
+            "description": [
+              {
+                "language": "en-GB",
+                "text": "dropped, missed, busy, no-package, wrong-package, invalid-command, controller-unreachable or timeout."
+              }
+            ],
+            "semanticId": {
+              "type": "ExternalReference",
+              "keys": [
+                {
+                  "type": "GlobalReference",
+                  "value": "https://plant.example/semantics/dynamic-sorting/CommandOutcome/1/0"
+                }
+              ]
+            },
+            "valueType": "xs:string"
+          }
+        },
+        {
+          "value": {
+            "modelType": "Property",
+            "idShort": "CommandReceivedAt",
+            "semanticId": {
+              "type": "ExternalReference",
+              "keys": [
+                {
+                  "type": "GlobalReference",
+                  "value": "https://plant.example/semantics/dynamic-sorting/CommandReceivedAt/1/0"
+                }
+              ]
+            },
+            "valueType": "xs:dateTime"
+          }
+        },
+        {
+          "value": {
+            "modelType": "Property",
+            "idShort": "PickedAt",
+            "semanticId": {
+              "type": "ExternalReference",
+              "keys": [
+                {
+                  "type": "GlobalReference",
+                  "value": "https://plant.example/semantics/dynamic-sorting/PickedAt/1/0"
+                }
+              ]
+            },
+            "valueType": "xs:dateTime"
+          }
+        }
+      ]
+    }
+  ]
+}

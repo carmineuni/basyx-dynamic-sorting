@@ -1,0 +1,38 @@
+# Host-specific values and secrets come from compose.yaml as environment
+# variables, which take precedence over this file
+
+logging:
+  format: text
+  level: info
+
+server:
+  port: 8081
+  host: 0.0.0.0
+  contextPath: ""
+  strictVerification: strict
+
+postgres:
+  host: localhost
+  port: 5432
+  user: basyx
+  dbname: basyx
+  maxOpenConnections: 20
+  maxIdleConnections: 10
+  connMaxLifetimeMinutes: 5
+
+# The BaSyx AAS Web UI calls this API from the browser
+cors:
+  allowedOrigins: ["*"]
+  allowedMethods: [GET, POST, PUT, PATCH, DELETE, OPTIONS]
+  allowedHeaders: ["*"]
+  allowCredentials: true
+
+abac:
+  enabled: false
+
+general:
+  externalUrl: http://plant-server:8081
+  aasRegistryIntegration: true
+  submodelRegistryIntegration: true
+  aasPreconfigPaths:
+    - /asset-administration-shells

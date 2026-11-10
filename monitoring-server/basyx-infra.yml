@@ -1,0 +1,39 @@
+##
+# The infrastructure shown by the BaSyx AAS Web UI: the plant's AAS
+# Environment, with the registries, Discovery, the shells, the static
+# submodels and the concept descriptions.
+#
+# The live submodels are read at the endpoints in their descriptors, on the
+# edge gateways and on the cell controller: the Web UI calls only the
+# components below and the trusted origins.
+#
+# The browser resolves these addresses: see monitoring-server/compose.yaml
+#
+
+infrastructures:
+  default: dynamic-sorting-cell
+
+  dynamic-sorting-cell:
+    name: Dynamic sorting cell
+    components:
+      aasDiscovery:
+        baseUrl: "http://plant-server:8081/lookup/shells"
+      aasRegistry:
+        baseUrl: "http://plant-server:8081/shell-descriptors"
+        hasDiscoveryIntegration: true
+      submodelRegistry:
+        baseUrl: "http://plant-server:8081/submodel-descriptors"
+      aasRepository:
+        baseUrl: "http://plant-server:8081/shells"
+        hasRegistryIntegration: true
+      submodelRepository:
+        baseUrl: "http://plant-server:8081/submodels"
+        hasRegistryIntegration: true
+      conceptDescriptionRepository:
+        baseUrl: "http://plant-server:8081/concept-descriptions"
+    trustedOrigins:
+      - "http://conveyor-belt-edge-gateway:8091"
+      - "http://robotic-arm-edge-gateway:8092"
+      - "http://cell-controller:8093"
+    security:
+      type: none # lab setting

@@ -1,0 +1,31 @@
+# The settings below can be overridden from the shell, for example:
+# TRAVEL_TIME_MIN=1s TRAVEL_TIME_MAX=2s docker compose up -d
+
+services:
+  conveyor-belt:
+    build: .
+    hostname: conveyor-belt
+    init: true
+    cap_drop:
+      - ALL
+    logging:
+      driver: local
+      options:
+        max-size: "10m"
+        max-file: "3"
+    environment:
+      NODE_ENV: production
+      # MQTT ICG URL
+      ICG_URL: mqtt://industrial-communication-gateway:1883
+      # Time between two packages reaching the pick window (uniform)
+      TRAVEL_TIME_MIN: ${TRAVEL_TIME_MIN:-2s}
+      TRAVEL_TIME_MAX: ${TRAVEL_TIME_MAX:-4s}
+      # Share of metallic (red) packages; the others are non-metallic (green)
+      METALLIC_SHARE: ${METALLIC_SHARE:-0.5}
+    networks:
+      - shop-floor-network
+    restart: unless-stopped
+
+networks:
+  shop-floor-network:
+    internal: true

@@ -1,0 +1,101 @@
+##
+# Conveyor belt edge gateway (E_CB): the industrial PC next to the belt.
+# It runs the edge half of iDT_CB:
+# - Pause: Shared machine resources
+# - PostgreSQL
+# - BaSyx Configuration Service
+# - BaSyx Submodel Repository hosting SensedProperties
+# - Sensed properties forwarder (proxy)
+#   - Keeps SensedProperties in step with the belt PLC
+#   - Registers it in the plant's registry
+#
+# The shell of iDT_CB and its static submodels are on the plant server
+#
+
+services:
+  conveyor-belt-edge-gateway:
+    image: registry.k8s.io/pause:3.10
+    hostname: conveyor-belt-edge-gateway
+    networks:
+      - shop-floor-network
+      - plant-network
+    ports:
+      - "8091:8091" # Submodel Repository
+    restart: unless-stopped
+
+  conveyor-belt-edge-gateway-database:
+    image: postgres:18
+    network_mode: service:conveyor-belt-edge-gateway
+    command: ["postgres", "-c", "jit=off"]
+    environment:
+      POSTGRES_USER: basyx
+      POSTGRES_PASSWORD: basyx # lab credentials
+      POSTGRES_DB: basyx
+    volumes:
+      - conveyor-belt-edge-gateway-database:/var/lib/postgresql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -h localhost -U basyx -d basyx"]
+      interval: 20s
+      timeout: 5s
+      retries: 5
+      start_period: 60s
+      start_interval: 1s
+    restart: unless-stopped
+
+  conveyor-belt-edge-gateway-basyx-configuration:
+    image: eclipsebasyx/basyxconfigurationservice-go:1.1.2
+    network_mode: service:conveyor-belt-edge-gateway
+    environment:
+      POSTGRES_HOST: localhost
+      POSTGRES_PORT: "5432"
+      POSTGRES_USER: basyx
+      POSTGRES_PASSWORD: basyx
+      POSTGRES_DBNAME: basyx
+    depends_on:
+      conveyor-belt-edge-gateway-database:
+        condition: service_healthy
+    restart: "no"
+
+  conveyor-belt-edge-gateway-submodel-repository:
+    image: eclipsebasyx/submodelrepository-go:1.1.2
+    network_mode: service:conveyor-belt-edge-gateway
+    environment:
+      SERVER_PORT: "8091"
+      POSTGRES_PASSWORD: basyx
+    volumes:
+      - ./submodel-repository.yaml:/config/config.yaml:ro
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--output-document=-", "http://127.0.0.1:8091/health"]
+      interval: 20s
+      timeout: 5s
+      retries: 5
+      start_period: 60s
+      start_interval: 1s
+    depends_on:
+      conveyor-belt-edge-gateway-basyx-configuration:
+        condition: service_completed_successfully
+    restart: unless-stopped
+
+  sensed-properties-forwarder:
+    build: ./sensed-properties-forwarder
+    network_mode: service:conveyor-belt-edge-gateway
+    environment:
+      ICG_URL: mqtt://industrial-communication-gateway:1883
+      REPOSITORY_URL: http://conveyor-belt-edge-gateway:8091 #@SEE The descriptor
+      PLANT_REGISTRY_URL: http://plant-server:8081
+      ASSET_ID: https://plant.example/assets/conveyor-belt/CB-0001
+      SUBMODEL_FILE: /usr/share/aas/sensed-properties-forwarder/sensed-properties-submodel.json
+    volumes:
+      - ./asset-administration-shells/sensed-properties-submodel.json:/usr/share/aas/sensed-properties-forwarder/sensed-properties-submodel.json:ro
+    depends_on:
+      conveyor-belt-edge-gateway-submodel-repository:
+        condition: service_healthy
+    restart: unless-stopped
+
+volumes:
+  conveyor-belt-edge-gateway-database:
+
+networks:
+  shop-floor-network:
+    internal: true
+  plant-network: {}

@@ -1,0 +1,47 @@
+name: dynamic-sorting-cell
+
+include:
+  - industrial-communication-gateway/compose.yaml
+  - conveyor-belt/compose.yaml
+  - robotic-arm/compose.yaml
+  - conveyor-belt-edge-gateway/compose.yaml
+  - robotic-arm-edge-gateway/compose.yaml
+  - cell-controller/compose.yaml
+  - plant-server/compose.yaml
+  - monitoring-server/compose.yaml
+
+##
+# Docker Compose commands
+#
+# Start (or rebuild) containers:
+# docker compose up --build -d
+#
+# Restart containers (without build):
+# docker compose restart
+#
+# Build images without starting containers:
+# docker compose build
+#
+# Stop and remove containers:
+# docker compose down
+#
+# View container logs:
+# docker compose logs -f
+#
+# Check container status:
+# docker compose ps
+#
+# Force container recreation:
+# docker compose up --build -d --force-recreate
+#
+# View logs for a specific service:
+# docker compose logs -f conveyor-belt
+#
+# Stop a specific service:
+# docker compose stop conveyor-belt
+#
+# Start a stopped service:
+# docker compose start conveyor-belt
+#
+# Access a running container's shell:
+# docker compose exec conveyor-belt sh

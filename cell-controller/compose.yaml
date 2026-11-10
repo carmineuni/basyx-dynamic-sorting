@@ -1,0 +1,125 @@
+##
+# Cell controller (CC): the industrial PC of the dynamic sorting cell.
+# It runs the cell half of cDT_DS:
+# - Pause: Shared machine resources
+# - PostgreSQL
+# - BaSyx Configuration Service
+# - BaSyx Submodel Repository hosting SortingRules and OperationalData
+# - Event broker of the cell
+# - Dynamic sorting application (the purpose logic)
+#   - Registers SortingRules and OperationalData in the plant's registry
+#   - Composes cDT_DS and sorts the packages
+#
+# The shell of cDT_DS and its static submodels are on the plant server
+#
+
+services:
+  cell-controller:
+    image: registry.k8s.io/pause:3.10
+    hostname: cell-controller
+    networks:
+      shop-floor-network:
+        aliases: [event-broker]
+      plant-network: {}
+    ports:
+      - "8093:8093" # Submodel Repository
+    restart: unless-stopped
+
+  cell-controller-database:
+    image: postgres:18
+    network_mode: service:cell-controller
+    command: ["postgres", "-c", "jit=off"]
+    environment:
+      POSTGRES_USER: basyx
+      POSTGRES_PASSWORD: basyx # lab credentials
+      POSTGRES_DB: basyx
+    volumes:
+      - cell-controller-database:/var/lib/postgresql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -h localhost -U basyx -d basyx"]
+      interval: 20s
+      timeout: 5s
+      retries: 5
+      start_period: 60s
+      start_interval: 1s
+    restart: unless-stopped
+
+  cell-controller-basyx-configuration:
+    image: eclipsebasyx/basyxconfigurationservice-go:1.1.2
+    network_mode: service:cell-controller
+    environment:
+      POSTGRES_HOST: localhost
+      POSTGRES_PORT: "5432"
+      POSTGRES_USER: basyx
+      POSTGRES_PASSWORD: basyx
+      POSTGRES_DBNAME: basyx
+    depends_on:
+      cell-controller-database:
+        condition: service_healthy
+    restart: "no"
+
+  cell-controller-submodel-repository:
+    image: eclipsebasyx/submodelrepository-go:1.1.2
+    network_mode: service:cell-controller
+    environment:
+      SERVER_PORT: "8093"
+      POSTGRES_PASSWORD: basyx
+    volumes:
+      - ./submodel-repository.yaml:/config/config.yaml:ro
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--output-document=-", "http://127.0.0.1:8093/health"]
+      interval: 20s
+      timeout: 5s
+      retries: 5
+      start_period: 60s
+      start_interval: 1s
+    depends_on:
+      cell-controller-basyx-configuration:
+        condition: service_completed_successfully
+    restart: unless-stopped
+
+  event-broker:
+    image: eclipse-mosquitto:2.0.22
+    network_mode: service:cell-controller
+    volumes:
+      - ./event-broker.conf:/mosquitto/config/mosquitto.conf:ro
+    healthcheck:
+      test: ["CMD", "mosquitto_sub", "-h", "localhost", "-t", "$$SYS/broker/version", "-C", "1", "-W", "3"]
+      interval: 20s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+      start_interval: 1s
+    restart: unless-stopped
+
+  dynamic-sorting-application:
+    build: ./dynamic-sorting-application
+    network_mode: service:cell-controller
+    environment:
+      REPOSITORY_URL: http://cell-controller:8093 #@SEE The descriptors
+      PLANT_REGISTRY_URL: http://plant-server:8081
+      EVENT_BROKER_URL: mqtt://event-broker:1883
+      CELL_ASSET_ID: https://plant.example/assets/dynamic-sorting-cell/DSC-0001
+      SORTING_RULES_FILE: /usr/share/aas/dynamic-sorting-application/sorting-rules-submodel.json
+      OPERATIONAL_DATA_FILE: /usr/share/aas/dynamic-sorting-application/operational-data-submodel.json
+      # A read now and then, in case an event was lost
+      RECONCILIATION_INTERVAL: ${RECONCILIATION_INTERVAL:-5s}
+      # One summary record every this many packages
+      PACKAGES_PER_SUMMARY: ${PACKAGES_PER_SUMMARY:-20}
+    volumes:
+      - ./asset-administration-shells/sorting-rules-submodel.json:/usr/share/aas/dynamic-sorting-application/sorting-rules-submodel.json:ro
+      - ./asset-administration-shells/operational-data-submodel.json:/usr/share/aas/dynamic-sorting-application/operational-data-submodel.json:ro
+    depends_on:
+      cell-controller-submodel-repository:
+        condition: service_healthy
+      event-broker:
+        condition: service_healthy
+    restart: unless-stopped
+
+volumes:
+  cell-controller-database:
+
+networks:
+  shop-floor-network:
+    internal: true
+  plant-network: {}

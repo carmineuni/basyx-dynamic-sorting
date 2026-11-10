@@ -1,0 +1,12 @@
+{
+  "name": "robotic-arm",
+  "description": "Simulated controller of the robotic arm (RA)",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "node main.js"
+  },
+  "dependencies": {
+    "mqtt": "5.16.1"
+  }
+}

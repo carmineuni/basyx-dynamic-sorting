@@ -1,0 +1,86 @@
+##
+# Monitoring server: the operators' window on the cell, on the plant network.
+# - Pause: Shared machine resources
+# - BaSyx AAS Web UI
+# - Loki: the logs of every machine
+# - Alloy: collects the containers' logs and sends them to Loki
+# - Grafana: the logs and the metrics computed from them
+#
+# As in the BaSyx Go observability example:
+# https://github.com/eclipse-basyx/basyx-go-components/tree/v1.1.2/examples/BaSyxObservabilityExample
+#
+# Lab setting: Alloy reads the logs of all the containers through the Docker
+# socket; on real machines each one would run its own log agent
+#
+
+services:
+  monitoring-server:
+    image: registry.k8s.io/pause:3.10
+    hostname: monitoring-server
+    networks:
+      - plant-network
+    ports:
+      - "3000:3000" # BaSyx AAS Web UI
+      - "3001:3001" # Grafana
+    restart: unless-stopped
+
+  aas-web-ui:
+    image: eclipsebasyx/aas-gui:v2-261013
+    network_mode: service:monitoring-server
+    environment:
+      # The infrastructure comes from basyx-infra.yml only
+      ENDPOINT_CONFIG_AVAILABLE: "false"
+    volumes:
+      - ./basyx-infra.yml:/basyx-infra.yml:ro
+    restart: unless-stopped
+
+  loki:
+    image: grafana/loki:3.7.4
+    network_mode: service:monitoring-server
+    command: ["-config.file=/etc/loki/local-config.yaml"]
+    volumes:
+      - ./loki.yaml:/etc/loki/local-config.yaml:ro
+      - monitoring-server-loki:/loki
+    restart: unless-stopped
+
+  alloy:
+    image: grafana/alloy:v1.18.0
+    network_mode: service:monitoring-server
+    command:
+      - run
+      - --server.http.listen-addr=127.0.0.1:12345
+      - --storage.path=/var/lib/alloy
+      - /etc/alloy/config.alloy
+    volumes:
+      - ./alloy/config.alloy:/etc/alloy/config.alloy:ro
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - monitoring-server-alloy:/var/lib/alloy
+    depends_on:
+      loki:
+        condition: service_started
+    restart: unless-stopped
+
+  grafana:
+    image: grafana/grafana:13.1.1
+    network_mode: service:monitoring-server
+    environment:
+      GF_SERVER_HTTP_PORT: "3001" # 3000 is the Web UI's, on the same machine
+      GF_AUTH_ANONYMOUS_ENABLED: "true" # lab setting
+      GF_AUTH_ANONYMOUS_ORG_ROLE: Editor
+      GF_AUTH_DISABLE_LOGIN_FORM: "true"
+      GF_DASHBOARDS_DEFAULT_HOME_DASHBOARD_PATH: /etc/grafana/dashboards/dynamic-sorting-cell.json
+    volumes:
+      - ./grafana/provisioning/datasources:/etc/grafana/provisioning/datasources:ro
+      - ./grafana/provisioning/dashboards:/etc/grafana/provisioning/dashboards:ro
+      - ./grafana/dashboards:/etc/grafana/dashboards:ro
+    depends_on:
+      loki:
+        condition: service_started
+    restart: unless-stopped
+
+volumes:
+  monitoring-server-loki:
+  monitoring-server-alloy:
+
+networks:
+  plant-network: {}

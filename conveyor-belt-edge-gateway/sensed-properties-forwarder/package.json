@@ -1,0 +1,13 @@
+{
+  "name": "sensed-properties-forwarder",
+  "description": "Proxy of the conveyor belt: edge half of iDT_CB",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "node main.js"
+  },
+  "dependencies": {
+    "basyx-typescript-sdk": "2.4.2",
+    "mqtt": "5.16.1"
+  }
+}
